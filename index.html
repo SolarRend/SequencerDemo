@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<!--
+ ! Copyright (C) 2016 James T. Kuczynski
+ !
+ ! This software may be modified and distributed under the terms
+ ! of the MIT license.  See the LICENSE file for details.
+ -->
+
+<!--
+ ! File:   mainPage.html
+ ! Author: James Kuczynski
+ ! Email:  jkuczyns@cs.uml.edu
+ ! File Description: 
+
+ ! Created: 3/25/2016
+ ! Last Modified: 3/27/2016
+-->
+
+<html>
+   <head>
+      <title>MusicBox</title>
+      <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+      <!-- <link rel="shortcut icon" href="./res/compass.png"/> -->
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- polyfill -->
+      <script src="js/MIDIjs/inc/shim/Base64.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/inc/shim/Base64binary.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+      <!-- midi.js package -->
+      <script src="js/MIDIjs/js/midi/audioDetect.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/js/midi/gm.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/js/midi/loader.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/js/midi/plugin.audiotag.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/js/midi/plugin.webaudio.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/js/midi/plugin.webmidi.js" type="text/javascript"></script>
+      <!-- utils -->
+      <script src="js/MIDIjs/js/util/dom_request_xhr.js" type="text/javascript"></script>
+      <script src="js/MIDIjs/js/util/dom_request_script.js" type="text/javascript"></script>
+      <!--tuna.js for effect -->
+      <script src="js/MIDIjs/inc/tuna/tuna.js" type="text/javascript"></script>
+      <!--script for audio playback-->
+      <script src="js/note_audio_playback.js" type="text/javascript"></script>
+   </head>
+    <body>
+        <div class="outsideWrapper">
+            <img id="grand_staff" src="./res/grand_staff.png" class="coveredImage" alt="world"/>
+            <!-- http://stackoverflow.com/questions/4166645/html5-canvas-image-resizing -->
+            <canvas  width="650" height="230" class="coveringCanvas" id="myCanvas"></canvas>
+        </div>
+        <div id="controls">
+            <h5>Controls</h5>
+            <label for="yy">Instrument</label>
+            <select id="yy">
+                <option value="piano">Piano</option>
+                <option value="violin">Violin</option>
+                <option value="organ">Organ</option>
+                <option value="guitar">Guitar</option>
+            </select><br>
+            <label for="zz">Tempo</label>
+            <select id="zz">
+                <option value="fast">Fast</option>
+                <option value="medium">Medium</option>
+                <option value="slow">Slow</option>
+            </select><br>
+            <label for="xx">Play-along</label>
+            <input type="checkbox" name="xx" id="xx" value="xx">
+            <h6>Modifiers</h6><br>
+            <button type="button">Distort</button><br>
+            <button type="button">Echo</button><br>
+            <button type="button">Chord</button><br>
+            <button onclick="javascript:undoNote()" type="button">undo</button> <!-- for testing purposes; delete me! -->
+            <button onclick="javascript:play()" type="button">play</button> <!--demo purposes-->
+        </div>
+
+        <div id="note_controls">
+            <div id="lbl-container">
+                <h3>A</h3>
+                <h3>B</h3>
+                <h3>C</h3>
+                <h3>D</h3>
+                <h3>E</h3>
+                <h3>F</h3>
+                <h3>G</h3>
+            </div>
+            <div class="button-container">
+                <button id="a-low" onclick="javascript:playNote(33)" ondblclick="javascript:addNote(33)" type="button">Low</button>
+                <button id="b-low" onclick="javascript:playNote(35)" ondblclick="javascript:addNote(35)" type="button">Low</button>
+                <button id="c-low" onclick="javascript:playNote(36)" ondblclick="javascript:addNote(36)" type="button">Low</button>
+                <button id="d-low" onclick="javascript:playNote(38)" ondblclick="javascript:addNote(38)" type="button">Low</button>
+                <button id="e-low" onclick="javascript:playNote(40)" ondblclick="javascript:addNote(40)" type="button">Low</button>
+                <button id="f-low" onclick="javascript:playNote(41)" ondblclick="javascript:addNote(41)" type="button">Low</button>
+                <button id="g-low" onclick="javascript:playNote(43)" ondblclick="javascript:addNote(43)" type="button">Low</button>
+                <button id="a-medium" onclick="javascript:playNote(45)" ondblclick="javascript:addNote(45)" type="button">Medium</button>
+                <button id="b-medium" onclick="javascript:playNote(47)" ondblclick="javascript:addNote(47)" type="button">Medium</button>
+                <button id="c-medium" onclick="javascript:playNote(48)" ondblclick="javascript:addNote(48)" type="button">Medium</button>
+                <button id="d-medium" onclick="javascript:playNote(50)" ondblclick="javascript:addNote(50)" type="button">Medium</button>
+                <button id="e-medium" onclick="javascript:playNote(52)" ondblclick="javascript:addNote(52)" type="button">Medium</button>
+                <button id="f-medium" onclick="javascript:playNote(53)" ondblclick="javascript:addNote(53)" type="button">Medium</button>
+                <button id="g-medium" onclick="javascript:playNote(55)" ondblclick="javascript:addNote(55)" type="button">Medium</button>
+                <button id="a-high" onclick="javascript:playNote(57)" ondblclick="javascript:addNote(57)" type="button">High</button>
+                <button id="b-high" onclick="javascript:playNote(59)" ondblclick="javascript:addNote(59)" type="button">High</button>
+                <button id="c-high" onclick="javascript:playNote(60)" ondblclick="javascript:addNote(60)" type="button">High</button>
+                <button id="d-high" onclick="javascript:playNote(62)" ondblclick="javascript:addNote(62)" type="button">High</button>
+                <button id="e-high" onclick="javascript:playNote(64)" ondblclick="javascript:addNote(64)" type="button">High</button>
+                <button id="f-high" onclick="javascript:playNote(65)" ondblclick="javascript:addNote(65)" type="button">High</button>
+                <button id="g-high" onclick="javascript:playNote(67)" ondblclick="javascript:addNote(67)" type="button">High</button>
+
+
+            </div>
+
+        </div>
+
+
+        <script>
+            /*
+            var notes = {};
+            var count = 100;
+            var countOffset = 50;
+            notes['G5'] = -28;
+            notes['F5'] = -21;
+            notes['E5'] = -12;
+            notes['D5'] = -5;
+            notes['C5'] = 4;
+            notes['B5'] = 11;
+            notes['A5'] = 20;
+            notes['G4'] = 27;
+            notes['F4'] = 35;
+            notes['E4'] = 42;
+            notes['D4'] = 50;
+            notes['B4'] = 82;
+            notes['A4'] = 90;
+            notes['G4'] = 98;
+            notes['F3'] = 106;
+            notes['E3'] = 114;
+            notes['D3'] = 122;
+            notes['C3'] = 130;
+            notes['B3'] = 138;
+            notes['A3'] = 146;
+
+
+            var canvas = document.getElementById('myCanvas');
+            context = canvas.getContext('2d');
+
+            make_base();
+
+            function make_base()
+            {
+                base_image = new Image();
+                base_image.src = 'res/eighth_note_scaled.png';
+                base_image.onload = function(){
+                    
+                    context.drawImage(base_image, 100, notes['G5']);
+                    context.drawImage(base_image, 150, notes['F5']);
+                    context.drawImage(base_image, 200, notes['E5']);
+                    context.drawImage(base_image, 250, notes['D5']);
+                    context.drawImage(base_image, 300, notes['C5']);
+                    context.drawImage(base_image, 350, notes['B5']);
+                    context.drawImage(base_image, 400, notes['A5']);
+                    context.drawImage(base_image, 450, notes['G4']);
+                    context.drawImage(base_image, 500, notes['F4']);
+                    context.drawImage(base_image, 550, notes['E4']);
+                    context.drawImage(base_image, 600, notes['D4']);
+
+                    context.drawImage(base_image, 100, 82); //B4
+                    context.drawImage(base_image, 150, 90); //A4
+                    context.drawImage(base_image, 200, 98); //G3
+                    context.drawImage(base_image, 250, 106); //F3
+                    context.drawImage(base_image, 300, 114); //E3 i*8
+                    context.drawImage(base_image, 350, 122); //D3
+                    context.drawImage(base_image, 400, 130); //C3
+                    context.drawImage(base_image, 450, 138); //B3
+                    context.drawImage(base_image, 500, 146); //A3
+
+              };
+            }
+            */
+        </script>
+    <script src="js/note_stuff.js"></script>
+    <script src="js/libs/jquery/jquery-3.1.1.min.js"></script>
+    </body>
+</html>

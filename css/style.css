@@ -1,0 +1,78 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+
+/* 
+    Created on : Mar 20, 2017, 7:26:50 PM
+    Author     : james
+*/
+
+
+body {
+    background-color: lightgreen;
+    margin: 0;
+    padding: 0;
+}
+
+
+.outsideWrapper img {
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    border: 3px solid green;
+    padding: 10px;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+
+.coveringCanvas {
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    border: 3px solid green;
+    padding: 10px;
+    margin-left: 0;
+    margin-top: 0;
+    background-color: rgba(0, 0, 200,.1);
+}
+
+#controls {
+    position: absolute;
+    top: 20%;
+    border: 3px solid black;
+}
+
+#note_controls {
+    position: absolute;
+    top: 60%;
+    left: 30%;
+}
+
+.button-container {
+    width: 740px;
+    background: gray;
+    overflow-y: auto;
+}
+
+.button-container > button {
+    width: 75px;
+    height: 50px;
+    float: left;
+    background: lightgray;
+    margin: 15px;
+}
+
+#lbl {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#lbl-container > h3 {
+    float: left;
+    margin: 15px;
+    margin-left: 45px;
+    margin-right: 45px;
+}
