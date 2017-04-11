@@ -35,48 +35,6 @@ function init() {
 }
 init();
 
-/*
-function initEventHandlers() {
-    var aLow = documentlgetElementeById('a-low');
-    var bLow = documentlgetElementeById('b-low');
-    var cLow = documentlgetElementeById('e-low');
-    var dLow = documentlgetElementeById('d-low');
-    var eLow = documentlgetElementeById('e-low');
-    var fLow = documentlgetElementeById('f-low');
-    var gLow = documentlgetElementeById('g-low');
-
-    var aMedium = documentlgetElementeById('a-medium');
-    var bMedium = documentlgetElementeById('b-medium');
-    var cMedium = documentlgetElementeById('e-medium');
-    var dMedium = documentlgetElementeById('d-medium');
-    var eMedium = documentlgetElementeById('e-medium');
-    var fMedium = documentlgetElementeById('f-medium');
-    var gMedium = documentlgetElementeById('g-medium');
-
-    var aHigh = documentlgetElementeById('a-high');
-    var bHigh = documentlgetElementeById('b-high');
-    var cHigh = documentlgetElementeById('e-high');
-    var dHigh = documentlgetElementeById('d-high');
-    var eHigh = documentlgetElementeById('e-high');
-    var fHigh = documentlgetElementeById('f-high');
-    var gHigh = documentlgetElementeById('g-high');
-
-    if(aLow.addEventListener) {
-        aLow.addEventListener('click', function(event) {
-            event.addNote('a3');
-        });
-        //...
-    } else {
-        aLow.attachEvent('click', function(event) {
-            event.preventDefault();
-            addNote('a3');
-        });
-        //...
-    }
-
-}
-*/
-
 
 function playNote(note) {
     
@@ -123,6 +81,7 @@ function addNote(note) {
 }
 
 
+
 function drawNote(note) {
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
@@ -141,6 +100,11 @@ function drawNote(note) {
     }
 }
 
+
+/*
+ * Removes the most recent note by redawing all notes EXPECT the most recent
+ * one.
+ */
 function undoNote() {
 
     console.log('@undo note');
