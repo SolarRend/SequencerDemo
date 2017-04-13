@@ -166,7 +166,15 @@ function undoNote() {
 
 
     noteStack.pop();
-    count = 0;
+    
+    var NUM_THAT_FIT = 10;
+    if(noteStack.length <= NUM_THAT_FIT)
+        count = 0;
+    else
+    {   
+        count = noteStack.length - NUM_THAT_FIT;
+        count = -count;
+    }  
 
     for(var i = 0; i < noteStack.length; i++) {
         drawNote(noteStack[i]);
